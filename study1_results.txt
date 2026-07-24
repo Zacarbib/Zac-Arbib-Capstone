@@ -1,0 +1,19 @@
+STUDY 1 RESULTS — embedding mode: SBERT all-mpnet-base-v2
+======================================================================
+condition       n            MTLD       convergence    user-only conv
+solo           99     90.0 (20.8)   0.7658 (0.0805)                 —
+gpt3           97     88.0 (18.3)   0.7469 (0.0964)   0.6963 (0.1012)
+instructgpt   100     93.1 (19.1)   0.7938 (0.0632)   0.7096 (0.0928)
+
+PRIMARY CONFIRMATORY (solo vs instructgpt, Holm-corrected family of 2)
+  Convergence: diff=+0.0281, d=+0.39, 95% CI [+0.0084, +0.0486], perm p=0.0446, Holm p=0.0892
+  MTLD:        diff=+3.04,  d=+0.15, 95% CI [-2.52, +8.50], perm p=0.2660, Holm p=0.2660
+  DECISION RULE (dissociation supported?): NO
+
+SECONDARY / EXPLORATORY (no confirmatory claims)
+  solo vs gpt3 — convergence: diff=-0.0189, d=-0.21, p=0.2726
+  solo vs gpt3 — MTLD:        diff=-2.00,  d=-0.10, p=0.4434
+  gpt3: whole-essay vs user-only convergence 0.7469 vs 0.6963, Wilcoxon p=1.96e-17 (mechanism, exploratory)
+  gpt3: user-only vs SOLO whole-essay convergence d=-0.76 (exploratory)
+  instructgpt: whole-essay vs user-only convergence 0.7938 vs 0.7096, Wilcoxon p=6.24e-18 (mechanism, exploratory)
+  instructgpt: user-only vs SOLO whole-essay convergence d=-0.64 (exploratory)

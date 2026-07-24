@@ -1,0 +1,47 @@
+ROBUSTNESS CHECKS (post-hoc sensitivity analyses, reviewer feedback 20 Jul 2026)
+run: 2026-07-21T08:52:09.867680+00:00  seed: 20260721  N_PERM=2000  N_BOOT=10000
+==============================================================================
+
+A. DUPLICATE-ESSAY SENSITIVITY (Study 1, raw text, mpnet)
+  duplicate found in condition 'instructgpt' (2 copies, first 60 chars: 'In my opinion, listening to a book is just as good as readin')
+  essays: 296 -> 295 after removing one copy
+  [original] convergence: diff=+0.0281 d=+0.39 p=0.0430 | MTLD: diff=+3.04 d=+0.15 p=0.2844
+  [dedup] convergence: diff=+0.0266 d=+0.37 p=0.0545 | MTLD: diff=+3.20 d=+0.16 p=0.2529
+
+B. PROMPT-LEVEL ROBUSTNESS (one mean per prompt x condition)
+  S1 solo vs instructgpt convergence: mean diff=+0.0298, 7/10 prompts positive, Wilcoxon p=0.1055, exact sign-flip p=0.1016
+  S2 solo vs default convergence: mean diff=+0.1896, 10/10 prompts positive, Wilcoxon p=0.0020, exact sign-flip p=0.0020
+  S2 solo vs persona convergence: mean diff=+0.0798, 10/10 prompts positive, Wilcoxon p=0.0020, exact sign-flip p=0.0020
+  S2 solo vs default MTLD: mean diff=+49.64, 10/10 prompts positive, Wilcoxon p=0.0020, exact sign-flip p=0.0020
+
+C. LENGTH ROBUSTNESS (Study 2 pipeline, normalised text)
+  C1. word count vs outcomes within condition (Pearson r / Spearman rho):
+    solo         (len SD=119.2): conv r=+0.03/rho=+0.11  MTLD r=+0.05/rho=+0.06
+    instructgpt  (len SD=114.1): conv r=-0.02/rho=-0.02  MTLD r=+0.09/rho=+0.08
+    default      (len SD= 10.4): conv r=+0.21/rho=+0.21  MTLD r=-0.05/rho=-0.04
+    persona      (len SD= 11.6): conv r=+0.28/rho=+0.24  MTLD r=-0.02/rho=-0.03
+  C2. truncation to a common budget of 173 tokens (sentence-preserving; essays shorter than the budget kept whole):
+    solo: truncated length M=173 SD=0.0
+    default: truncated length M=173 SD=0.0
+    convergence solo vs default (truncated): diff=+0.2229 d=+2.95 CI[+0.2031,+0.2447] p=0.0005   (untruncated d was reported as +3.24)
+    MTLD solo vs default (truncated): diff=+54.86 d=+1.90 p=0.0005   (untruncated d was reported as +2.02)
+
+D. EMBEDDING-MODEL SENSITIVITY (all-MiniLM-L6-v2, full pipeline)
+    solo        : convergence M=0.7641 (SD=0.0693)
+    gpt3        : convergence M=0.7468 (SD=0.0859)
+    instructgpt : convergence M=0.7904 (SD=0.0658)
+    persona     : convergence M=0.8363 (SD=0.0426)
+    default     : convergence M=0.9480 (SD=0.0151)
+    ordering (low to high): gpt3 < solo < instructgpt < persona < default
+    H-S2a default vs solo: diff=+0.1839 d=+3.67 perm p=0.0005 Holm p=0.0010
+    H-S2b persona vs solo: diff=+0.0722 d=+1.26 perm p=0.0005 Holm p=0.0010
+
+E. ENTROPY PAIRWISE TESTS, HOLM-CORRECTED (k=5, exploratory)
+    normalised entropy solo    : 0.783
+    normalised entropy persona : 0.343
+    normalised entropy default : 0.038
+    solo vs default: diff=-0.745 perm p=0.0005 Holm p=0.0015
+    solo vs persona: diff=-0.440 perm p=0.0005 Holm p=0.0015
+    default vs persona: diff=+0.305 perm p=0.0005 Holm p=0.0015
+
+Done.

@@ -1,0 +1,30 @@
+STUDY 2 RESULTS - embedding mode: SBERT all-mpnet-base-v2
+run: 2026-07-22T12:44:20.175775+00:00  seed: 20260707  N_PERM=10000  N_BOOT=10000
+======================================================================
+condition       n           MTLD         convergence         words
+solo           99      90.1 (21.3)       0.7656 (0.0810)             -
+gpt3           97      88.1 (18.5)       0.7468 (0.0970)             -
+instructgpt   100      93.1 (19.3)       0.7939 (0.0636)             -
+persona       100     147.6 (33.3)       0.8437 (0.0454)      340 (12)
+default       100     139.9 (27.5)       0.9535 (0.0143)      331 (10)
+
+PRIMARY CONFIRMATORY (Holm family of 2: H-S2a, H-S2b)
+  H-S2a default vs solo: diff=+0.1879  d=+3.24  CI[+0.1719,+0.2047]  perm p=0.0001  Holm p=0.0002
+  H-S2b persona vs solo: diff=+0.0781  d=+1.19  CI[+0.0600,+0.0961]  perm p=0.0001  Holm p=0.0002
+
+MTLD default vs solo (estimation, outside alpha family)
+  diff=+49.72  d=+2.02  CI[+42.87,+56.51]  p=0.0001  bound(|d|<0.3, p>=.05): FAIL
+
+STUDY 2 DISSOCIATION RULE: NOT SUPPORTED
+
+SECONDARY (labelled, no confirmatory claims)
+  default vs persona convergence: diff=+0.1099  d=+3.27  p=0.0001
+  persona vs solo MTLD: d=+2.05  p=0.0001
+
+EXPLORATORY: cluster entropy (k=5 primary; sensitivity in entropy_sensitivity.csv)
+  normalised entropy solo    : 0.795
+  normalised entropy default : 0.058
+  normalised entropy persona : 0.276
+  solo vs default: diff=-0.737  perm p=0.0001
+  solo vs persona: diff=-0.519  perm p=0.0001
+  default vs persona: diff=+0.218  perm p=0.0001
